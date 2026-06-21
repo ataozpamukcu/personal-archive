@@ -1,65 +1,73 @@
-import Image from "next/image";
+import { BlockCard } from "@/components/BlockCard";
+import { Header } from "@/components/Header";
+import { WritingCard } from "@/components/WritingCard";
+import { blocks, writings } from "@/data/archive";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="mx-auto min-h-screen max-w-[1600px] px-5 sm:px-8 lg:px-12">
+      <Header />
+
+      <main>
+        <section
+          id="about"
+          className="grid min-h-[54vh] border-b border-ink/80 py-12 sm:py-16 lg:grid-cols-12 lg:py-20"
+        >
+          <p className="text-[10px] uppercase tracking-[0.18em] text-muted lg:col-span-3">
+            A personal index, 2019-2026
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          <div className="mt-16 lg:col-span-7 lg:col-start-5 lg:mt-0">
+            <h1 className="font-serif text-[clamp(2.5rem,6vw,6.75rem)] font-normal leading-[0.94] tracking-[-0.045em]">
+              Notes on reading,
+              <br />
+              memory &amp; place.
+            </h1>
+            <p className="mt-10 max-w-md text-sm leading-6 text-muted sm:ml-auto sm:mt-14">
+              An evolving archive of essays, fragments, quotations, and images.
+              Collected slowly and arranged by association.
+            </p>
+          </div>
+        </section>
+
+        <section id="writings" className="border-b border-ink/80 py-12 sm:py-16">
+          <div className="mb-12 flex items-baseline justify-between sm:mb-16">
+            <h2 className="text-xs font-medium uppercase tracking-[0.16em]">
+              Writings
+            </h2>
+            <span className="text-[10px] tabular-nums text-muted">
+              {String(writings.length).padStart(2, "0")} entries
+            </span>
+          </div>
+
+          <div>
+            {writings.map((writing, index) => (
+              <WritingCard key={writing.id} writing={writing} index={index} />
+            ))}
+          </div>
+        </section>
+
+        <section id="blocks" className="py-12 sm:py-16">
+          <div className="mb-12 flex items-baseline justify-between sm:mb-16">
+            <h2 className="text-xs font-medium uppercase tracking-[0.16em]">
+              Collected blocks
+            </h2>
+            <span className="text-[10px] tabular-nums text-muted">
+              {String(blocks.length).padStart(2, "0")} objects
+            </span>
+          </div>
+
+          <div className="grid border-l border-t border-ink/80 sm:grid-cols-2 lg:grid-cols-3">
+            {blocks.map((block) => (
+              <BlockCard key={block.id} block={block} />
+            ))}
+          </div>
+        </section>
       </main>
+
+      <footer className="flex flex-col gap-3 border-t border-ink/80 py-6 text-[10px] uppercase tracking-[0.14em] text-muted sm:flex-row sm:justify-between">
+        <p>Personal Literary Archive</p>
+        <p>Last arranged June 2026</p>
+      </footer>
     </div>
   );
 }
