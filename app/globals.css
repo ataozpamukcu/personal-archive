@@ -1,17 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f3f1e9;
-  --ink: #151513;
-  --muted: #65645e;
+  --paper: #f7f7f3;
+  --canvas: #f1f1ec;
+  --card: #ffffff;
+  --ink: #171715;
+  --muted: #777770;
+  --line: #d6d6cf;
 }
 
 @theme inline {
   --color-background: var(--paper);
   --color-foreground: var(--ink);
   --color-paper: var(--paper);
+  --color-canvas: var(--canvas);
+  --color-card: var(--card);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
+  --color-line: var(--line);
   --font-sans: Arial, Helvetica, sans-serif;
   --font-mono: "Courier New", Courier, monospace;
   --font-serif: Georgia, "Times New Roman", serif;
@@ -30,6 +36,29 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.archive-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.archive-heading span {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.image-placeholder {
+  background:
+    linear-gradient(135deg, transparent 45%, rgba(23, 23, 21, 0.12) 45%, rgba(23, 23, 21, 0.12) 55%, transparent 55%),
+    radial-gradient(circle at 68% 35%, rgba(23, 23, 21, 0.3) 0 8%, transparent 8.5%),
+    linear-gradient(25deg, #d8d8d2 0 42%, #eeeeea 42% 100%);
+  filter: grayscale(1);
 }
 
 ::selection {

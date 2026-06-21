@@ -5,31 +5,41 @@ type BlockCardProps = {
 };
 
 export function BlockCard({ block }: BlockCardProps) {
-  return (
-    <article className="flex min-h-72 flex-col justify-between border-b border-r border-ink/80 p-5 sm:min-h-80 sm:p-6">
-      <div className="flex justify-between text-[10px] uppercase tracking-[0.13em] text-muted">
+  const content = (
+    <article className="flex min-h-72 flex-col border border-line bg-card p-4 transition-colors hover:border-ink sm:min-h-80">
+      <div className="flex justify-between text-[10px] uppercase tracking-[0.1em] text-muted">
         <span>{block.type}</span>
         <span>{block.year}</span>
       </div>
 
+      {block.type === "Görsel notu" && (
+        <div
+          className="image-placeholder mt-5 aspect-[4/3] border border-line"
+          aria-label="Arşiv görseli için yer tutucu"
+          role="img"
+        />
+      )}
+
       {block.type === "Alıntı" ? (
-        <blockquote className="my-12 font-serif text-xl leading-snug tracking-[-0.015em] sm:text-2xl">
+        <blockquote className="my-auto py-10 text-lg leading-[1.3] tracking-[-0.02em]">
           “{block.content}”
         </blockquote>
       ) : (
-        <p className="my-12 max-w-sm text-sm leading-6">{block.content}</p>
+        <p className="my-auto py-8 text-xs leading-[1.6]">{block.content}</p>
       )}
 
-      {block.href ? (
-        <a
-          href={block.href}
-          className="text-[10px] leading-4 text-muted underline underline-offset-4 transition-opacity hover:opacity-50"
-        >
-          {block.source} ↗
-        </a>
-      ) : (
-        <p className="text-[10px] leading-4 text-muted">{block.source}</p>
-      )}
+      <p className="border-t border-line pt-3 text-[10px] leading-4 text-muted">
+        {block.source}
+        {block.href && <span aria-hidden="true"> ↗</span>}
+      </p>
     </article>
+  );
+
+  return block.href ? (
+    <a href={block.href} className="block">
+      {content}
+    </a>
+  ) : (
+    content
   );
 }

@@ -1,31 +1,45 @@
 const navigation = [
-  { label: "Yazılar", href: "#writings" },
-  { label: "Parçalar", href: "#blocks" },
-  { label: "Hakkında", href: "#about" },
+  { label: "Yazılar", count: "03", href: "#writings" },
+  { label: "Parçalar", count: "06", href: "#blocks" },
+  { label: "Hakkında", count: "—", href: "#about" },
 ];
 
 export function Header() {
   return (
-    <header className="flex h-16 items-center justify-between border-b border-ink/80 text-[11px] uppercase tracking-[0.14em]">
-      <a href="#about" className="font-medium">
-        Açık Defter
-        <span className="ml-2 hidden text-muted sm:inline">Arşiv</span>
-      </a>
+    <header className="flex border-b border-line bg-canvas px-4 py-4 lg:sticky lg:top-0 lg:h-screen lg:flex-col lg:border-b-0 lg:border-r lg:px-5 lg:py-5">
+      <div className="flex w-full items-center justify-between lg:block">
+        <a href="#about" className="text-sm font-medium tracking-[-0.02em]">
+          Açık Defter
+        </a>
+        <span className="text-[10px] uppercase tracking-[0.12em] text-muted lg:mt-1 lg:block">
+          Kişisel arşiv
+        </span>
+      </div>
 
-      <nav aria-label="Ana navigasyon">
-        <ul className="flex gap-4 sm:gap-8">
+      <p className="mt-8 hidden max-w-40 text-xs leading-[1.45] text-muted lg:block">
+        yazılar, şiirler, notlar ve dağınık parçalar
+      </p>
+
+      <nav aria-label="Ana navigasyon" className="mt-16 hidden lg:block">
+        <ul className="border-t border-line">
           {navigation.map((item) => (
-            <li key={item.href}>
+            <li key={item.href} className="border-b border-line">
               <a
                 href={item.href}
-                className="underline-offset-4 transition-opacity hover:opacity-50 hover:underline"
+                className="flex justify-between py-2.5 text-xs transition-opacity hover:opacity-45"
               >
-                {item.label}
+                <span>{item.label}</span>
+                <span className="tabular-nums text-muted">{item.count}</span>
               </a>
             </li>
           ))}
         </ul>
       </nav>
+
+      <div className="mt-auto hidden text-[10px] leading-4 text-muted lg:block">
+        <p>İstanbul</p>
+        <p>Son düzenleme 21.06.2026</p>
+      </div>
     </header>
   );
 }
