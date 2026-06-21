@@ -1,7 +1,7 @@
 const navigation = [
-  { label: "Yazılar", count: "03", href: "#writings" },
-  { label: "Parçalar", count: "06", href: "#blocks" },
   { label: "Hakkında", count: "—", href: "#about" },
+  { label: "Yazılar", count: "00", href: "#writings" },
+  { label: "Parçalar", count: "01", href: "#blocks" },
 ];
 
 export function Header() {

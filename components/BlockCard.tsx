@@ -20,7 +20,36 @@ export function BlockCard({ block }: BlockCardProps) {
         />
       )}
 
-      {block.type === "Alıntı" ? (
+      {block.type === "Video" && block.mediaSrc ? (
+        <div className="my-5">
+          <video
+            className="mx-auto aspect-[17/30] max-h-[70vh] w-auto max-w-full bg-black object-contain"
+            controls
+            playsInline
+            preload="metadata"
+            src={block.mediaSrc}
+          >
+            Tarayıcın video oynatıcısını desteklemiyor.
+          </video>
+          <h3 className="mt-5 max-w-sm text-xl font-normal leading-[1.15] tracking-[-0.025em]">
+            {block.content}
+          </h3>
+        </div>
+      ) : block.type === "Müzik" && block.mediaSrc ? (
+        <div className="my-auto py-8">
+          <h3 className="max-w-sm text-xl font-normal leading-[1.15] tracking-[-0.025em]">
+            {block.content}
+          </h3>
+          <audio
+            className="mt-8 w-full"
+            controls
+            preload="metadata"
+            src={block.mediaSrc}
+          >
+            Tarayıcın ses oynatıcısını desteklemiyor.
+          </audio>
+        </div>
+      ) : block.type === "Alıntı" ? (
         <blockquote className="my-auto py-10 text-lg leading-[1.3] tracking-[-0.02em]">
           “{block.content}”
         </blockquote>
@@ -36,10 +65,14 @@ export function BlockCard({ block }: BlockCardProps) {
   );
 
   return block.href ? (
-    <a href={block.href} className="block">
-      {content}
-    </a>
+    <div className="mb-3 inline-block w-full break-inside-avoid lg:mb-4">
+      <a href={block.href} className="block">
+        {content}
+      </a>
+    </div>
   ) : (
-    content
+    <div className="mb-3 inline-block w-full break-inside-avoid lg:mb-4">
+      {content}
+    </div>
   );
 }
