@@ -26,6 +26,7 @@ export function BlockCard({ block }: BlockCardProps) {
             className="mx-auto aspect-[17/30] max-h-[70vh] w-auto max-w-full bg-black object-contain"
             controls
             playsInline
+            poster={block.posterSrc}
             preload="metadata"
             src={block.mediaSrc}
           >

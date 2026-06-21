@@ -15,6 +15,7 @@ export type ArchiveBlock = {
   year: string;
   href?: string;
   mediaSrc?: string;
+  posterSrc?: string;
 };
 
 export const profile = {
@@ -50,5 +51,6 @@ export const blocks: ArchiveBlock[] = [
     source: "Özgün piyano bestesi",
     year: "09.08.2024",
     mediaSrc: "/video/after-a-series-of-unfortunate-events.m4v",
+    posterSrc: "/video/after-a-series-of-unfortunate-events-poster.jpg",
   },
 ];
