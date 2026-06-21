@@ -102,9 +102,11 @@ export default async function CommentsAdminPage({
                     {" / "}
                     <Link
                       className="underline-offset-4 hover:underline"
-                      href={`/writings/${comment.post_slug}`}
+                      href={`/${comment.target_type}s/${comment.target_slug}`}
                     >
-                      {comment.post_slug}
+                      {comment.target_type === "writing" ? "yazı" : "blok"}
+                      {" / "}
+                      {comment.target_slug}
                     </Link>
                   </p>
                   <time dateTime={comment.created_at}>

@@ -1,20 +1,23 @@
 export type Writing = {
-  id: string;
+  slug: string;
   title: string;
-  excerpt: string;
-  body?: string[];
-  kind: "Review" | "Essay" | "Fragment" | "deneme";
+  type: "inceleme" | "deneme" | "parça";
   date?: string;
   displayDate: string;
+  excerpt?: string;
+  body: string[];
 };
 
 export type ArchiveBlock = {
-  id: string;
-  type: "Alıntı" | "Not" | "Bağlantı" | "Görsel notu" | "Müzik" | "Video";
-  content: string;
-  source: string;
-  year: string;
-  href?: string;
+  slug: string;
+  title?: string;
+  type: "alıntı" | "not" | "bağlantı" | "görsel notu" | "müzik" | "video";
+  date?: string;
+  displayDate?: string;
+  excerpt?: string;
+  body: string[];
+  source?: string;
+  sourceHref?: string;
   mediaSrc?: string;
   posterSrc?: string;
 };
@@ -41,29 +44,48 @@ export const profile = {
   ],
 };
 
-// Yeni yazılar geldikçe bu listeye Writing nesneleri eklenebilir.
 export const writings: Writing[] = [
   {
-    id: "yorum-testi",
-    title: "Yorum Testi",
-    excerpt: "Anonim ve moderasyonlu yorum sistemini denemek için geçici yazı.",
+    slug: "minik-serce-biz-de-yeniden-baslariz",
+    title: "Minik Serçe - Biz de Yeniden Başlarız",
+    type: "inceleme",
+    date: "2026-06-21",
+    displayDate: "21 Haziran 2026",
+    excerpt:
+      "Sezen Aksu’nun dönüşünü, geçmiş ve gelecek arasında sıkışan bir duygu haliyle okumaya çalışan bir yazı.",
     body: [
-      "Bu kısa metin yalnızca yorum akışını denemek için burada. Aşağıdaki formdan isimli veya anonim bir yorum bırakabilirsin.",
+      "Bu metin, Sezen Aksu’nun dönüşüne yalnızca yeni bir şarkı olarak değil; geçmişle gelecek arasında açılan tanıdık bir kapı olarak bakıyor.",
+      "Hatırladığımız ses ile bugün duyduğumuz ses aynı yerde buluşurken, zamanın bizden neleri alıp neleri geri getirdiğini düşünmeye çalışıyor.",
+      "Uzun metin tamamlandığında bu geçici paragraflar yerini incelemenin tam hâline bırakacak.",
     ],
-    kind: "deneme",
-    displayDate: "taslak",
   },
 ];
 
-// Yeni parçalar geldikçe bu listeye ArchiveBlock nesneleri eklenebilir.
 export const blocks: ArchiveBlock[] = [
   {
-    id: "after-a-series-of-unfortunate-events",
-    type: "Video",
-    content: "After a series of unfortunate events",
+    slug: "after-a-series-of-unfortunate-events",
+    title: "After a series of unfortunate events",
+    type: "video",
+    date: "2024-08-09",
+    displayDate: "9 Ağustos 2024",
+    excerpt: "Piyano için yazdığım özgün bir parça.",
+    body: [
+      "Bir dizi talihsiz olayın ardından piyanonun başında kalan kısa bir kayıt. Video ve beste bu arşivde birlikte duruyor.",
+    ],
     source: "Özgün piyano bestesi",
-    year: "09.08.2024",
     mediaSrc: "/video/after-a-series-of-unfortunate-events.m4v",
     posterSrc: "/video/after-a-series-of-unfortunate-events-poster.jpg",
+  },
+  {
+    slug: "yeniden-baslamak",
+    title: "Yeniden başlamak",
+    type: "alıntı",
+    displayDate: "2026",
+    excerpt: "Yeniden başlamak bazen kaldığın yere başka biri olarak dönmektir.",
+    body: [
+      "Yeniden başlamak bazen kaldığın yere başka biri olarak dönmektir.",
+      "Bu kısa parça, bitirmek ile geri dönmek arasındaki mesafeyi düşünmek için tutulmuş bir kenar notu.",
+    ],
+    source: "Kenar defteri, sayfa 14",
   },
 ];

@@ -15,7 +15,7 @@ export async function generateMetadata({
   params,
 }: WritingPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const writing = writings.find((item) => item.id === slug);
+  const writing = writings.find((item) => item.slug === slug);
 
   return writing
     ? { title: `${writing.title} — Açık Defter`, description: writing.excerpt }
@@ -24,12 +24,12 @@ export async function generateMetadata({
 
 export default async function WritingPage({ params }: WritingPageProps) {
   const { slug } = await params;
-  const writing = writings.find((item) => item.id === slug);
+  const writing = writings.find((item) => item.slug === slug);
 
   if (!writing) notFound();
 
   await connection();
-  const comments = await getApprovedComments(slug);
+  const comments = await getApprovedComments("writing", slug);
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[240px_minmax(0,1fr)]">
@@ -39,15 +39,15 @@ export default async function WritingPage({ params }: WritingPageProps) {
         <article className="py-8 sm:py-10">
           <div className="archive-heading">
             <Link href="/#writings">← Yazılar</Link>
-            <span>{writing.kind}</span>
+            <span>{writing.type}</span>
           </div>
 
           <header className="border-y border-line py-8 sm:py-12">
-            <h1 className="max-w-4xl text-[clamp(2rem,5vw,4.5rem)] font-normal leading-[1.02] tracking-[-0.04em]">
+            <h1 className="max-w-4xl font-serif text-[clamp(2rem,5vw,4.5rem)] font-normal leading-[1.02] tracking-[-0.04em]">
               {writing.title}
             </h1>
             <div className="mt-8 flex flex-wrap justify-between gap-3 text-[10px] uppercase tracking-[0.1em] text-muted">
-              <p>{writing.excerpt}</p>
+              {writing.excerpt && <p>{writing.excerpt}</p>}
               {writing.date ? (
                 <time dateTime={writing.date}>{writing.displayDate}</time>
               ) : (
@@ -57,13 +57,17 @@ export default async function WritingPage({ params }: WritingPageProps) {
           </header>
 
           <div className="mx-auto min-h-48 max-w-2xl space-y-5 py-10 text-sm leading-7 text-muted">
-            {(writing.body ?? [writing.excerpt]).map((paragraph) => (
+            {writing.body.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
         </article>
 
-        <CommentSection comments={comments} postSlug={slug} />
+        <CommentSection
+          comments={comments}
+          targetSlug={slug}
+          targetType="writing"
+        />
 
         <footer className="flex justify-between border-t border-line pt-3 text-[10px] text-muted">
           <p>Açık Defter © 2026</p>

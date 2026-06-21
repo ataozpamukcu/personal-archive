@@ -1,5 +1,5 @@
-import type { Writing } from "@/data/archive";
 import Link from "next/link";
+import type { Writing } from "@/data/archive";
 
 type WritingCardProps = {
   writing: Writing;
@@ -8,9 +8,13 @@ type WritingCardProps = {
 
 export function WritingCard({ writing, index }: WritingCardProps) {
   return (
-    <article className="group flex min-h-72 flex-col border border-line bg-card p-4 transition-colors hover:border-ink sm:min-h-80">
+    <Link
+      aria-label={`${writing.title} yazısını aç`}
+      className="group flex min-h-72 flex-col border border-line bg-card p-4 transition-colors hover:border-ink sm:min-h-80"
+      href={`/writings/${writing.slug}`}
+    >
       <div className="flex justify-between text-[10px] uppercase tracking-[0.1em] text-muted">
-        <span>{writing.kind}</span>
+        <span>{writing.type}</span>
         <span className="tabular-nums">
           {String(index + 1).padStart(2, "0")}
         </span>
@@ -18,11 +22,13 @@ export function WritingCard({ writing, index }: WritingCardProps) {
 
       <div className="my-auto py-10">
         <h3 className="text-xl font-normal leading-[1.12] tracking-[-0.025em] transition-opacity group-hover:opacity-55">
-          <Link href={`/writings/${writing.id}`}>{writing.title}</Link>
+          {writing.title}
         </h3>
-        <p className="mt-4 max-w-sm text-xs leading-[1.55] text-muted">
-          {writing.excerpt}
-        </p>
+        {writing.excerpt && (
+          <p className="mt-4 max-w-sm text-xs leading-[1.55] text-muted">
+            {writing.excerpt}
+          </p>
+        )}
       </div>
 
       <div className="border-t border-line pt-3 text-[10px] uppercase tracking-[0.09em] text-muted">
@@ -32,6 +38,6 @@ export function WritingCard({ writing, index }: WritingCardProps) {
           <span>{writing.displayDate}</span>
         )}
       </div>
-    </article>
+    </Link>
   );
 }

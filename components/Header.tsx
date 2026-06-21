@@ -3,8 +3,7 @@ import Link from "next/link";
 const navigation = [
   { label: "Hakkında", count: "—", href: "/#about" },
   { label: "Yazılar", count: "01", href: "/#writings" },
-  { label: "Parçalar", count: "01", href: "/#blocks" },
-  { label: "Yorum testi", count: "↗", href: "/writings/yorum-testi" },
+  { label: "Parçalar", count: "02", href: "/#blocks" },
 ];
 
 export function Header() {
