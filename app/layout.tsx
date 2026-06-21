@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Açık Defter",
-  description: "Yazılar, şiirler, notlar ve dağınık parçalar.",
+  description: "Üzerinde uğraştığım şeyler.",
 };
 
 export default function RootLayout({

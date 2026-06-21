@@ -19,23 +19,24 @@ export type ArchiveBlock = {
 };
 
 export const profile = {
-  // Kişisel bilgilerini bu alanlardan değiştirebilirsin.
-  name: "Adını buraya yaz",
+  name: "Ata Yılmaz Özpamukçu",
   location: "İstanbul",
   since: "2026’dan beri",
   bio: [
-    "Buraya kendin hakkında kısa bir giriş yazabilirsin: kim olduğun, neyle ilgilendiğin ve bu arşivi neden tuttuğun gibi.",
-    "İkinci paragrafı daha kişisel bir not, çalışma biçimin veya şu sıralar düşündüğün şeyler için kullanabilirsin.",
+    "Ürettiğim ve üzerine düştüğüm şeyler için kişisel bir arşiv. Keyifli gördüğüm, ürettiğim şeyleri burada paylaşmak istiyorum. İyi eğlenceler.",
   ],
   details: [
-    { label: "Uğraş", value: "Buraya ekle" },
-    { label: "İlgi alanları", value: "Buraya ekle" },
-    { label: "Şu sıralar", value: "Buraya ekle" },
+    {
+      label: "Şu sıralar",
+      value: "Plaklara ara verildi, Fizikten uzaklaşıldı",
+    },
   ],
   links: [
-    { label: "E-posta", value: "adresini ekle" },
-    { label: "Are.na", value: "profilini ekle" },
-    { label: "Diğer", value: "bağlantı ekle" },
+    {
+      label: "E-posta",
+      value: "a.ozpamukcu@gmail.com",
+      href: "mailto:a.ozpamukcu@gmail.com",
+    },
   ],
 };
 

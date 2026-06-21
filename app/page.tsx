@@ -57,7 +57,12 @@ export default function Home() {
                   {profile.links.map((link) => (
                     <li key={link.label}>
                       <span>{link.label}</span>
-                      <span className="ml-2 text-muted">{link.value}</span>
+                      <a
+                        className="ml-2 text-muted underline-offset-4 hover:underline"
+                        href={link.href}
+                      >
+                        {link.value}
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -70,8 +75,7 @@ export default function Home() {
               <p className="text-xs text-muted">Açık Defter / Kişisel arşiv</p>
             </div>
             <p className="max-w-60 text-xs leading-[1.55] text-muted md:justify-self-end">
-              Bitmiş metinlerle henüz yerini bulamamış düşünceler için açık,
-              kişisel bir indeks.
+              Üzerinde uğraştığım şeyler.
             </p>
           </div>
         </section>

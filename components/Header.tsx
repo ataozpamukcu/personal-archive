@@ -17,7 +17,7 @@ export function Header() {
       </div>
 
       <p className="mt-8 hidden max-w-40 text-xs leading-[1.45] text-muted lg:block">
-        yazılar, şiirler, notlar ve dağınık parçalar
+        Üzerinde uğraştığım şeyler
       </p>
 
       <nav aria-label="Ana navigasyon" className="mt-16 hidden lg:block">
