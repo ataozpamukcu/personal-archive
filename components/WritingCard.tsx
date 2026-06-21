@@ -1,4 +1,5 @@
 import type { Writing } from "@/data/archive";
+import Link from "next/link";
 
 type WritingCardProps = {
   writing: Writing;
@@ -17,7 +18,7 @@ export function WritingCard({ writing, index }: WritingCardProps) {
 
       <div className="my-auto py-10">
         <h3 className="text-xl font-normal leading-[1.12] tracking-[-0.025em] transition-opacity group-hover:opacity-55">
-          {writing.title}
+          <Link href={`/writings/${writing.id}`}>{writing.title}</Link>
         </h3>
         <p className="mt-4 max-w-sm text-xs leading-[1.55] text-muted">
           {writing.excerpt}

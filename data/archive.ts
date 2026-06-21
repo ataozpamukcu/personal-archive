@@ -2,7 +2,8 @@ export type Writing = {
   id: string;
   title: string;
   excerpt: string;
-  kind: "Review" | "Essay" | "Fragment";
+  body?: string[];
+  kind: "Review" | "Essay" | "Fragment" | "deneme";
   date?: string;
   displayDate: string;
 };
@@ -41,7 +42,18 @@ export const profile = {
 };
 
 // Yeni yazılar geldikçe bu listeye Writing nesneleri eklenebilir.
-export const writings: Writing[] = [];
+export const writings: Writing[] = [
+  {
+    id: "yorum-testi",
+    title: "Yorum Testi",
+    excerpt: "Anonim ve moderasyonlu yorum sistemini denemek için geçici yazı.",
+    body: [
+      "Bu kısa metin yalnızca yorum akışını denemek için burada. Aşağıdaki formdan isimli veya anonim bir yorum bırakabilirsin.",
+    ],
+    kind: "deneme",
+    displayDate: "taslak",
+  },
+];
 
 // Yeni parçalar geldikçe bu listeye ArchiveBlock nesneleri eklenebilir.
 export const blocks: ArchiveBlock[] = [

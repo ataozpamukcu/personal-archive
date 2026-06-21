@@ -1,16 +1,19 @@
+import Link from "next/link";
+
 const navigation = [
-  { label: "Hakkında", count: "—", href: "#about" },
-  { label: "Yazılar", count: "00", href: "#writings" },
-  { label: "Parçalar", count: "01", href: "#blocks" },
+  { label: "Hakkında", count: "—", href: "/#about" },
+  { label: "Yazılar", count: "01", href: "/#writings" },
+  { label: "Parçalar", count: "01", href: "/#blocks" },
+  { label: "Yorum testi", count: "↗", href: "/writings/yorum-testi" },
 ];
 
 export function Header() {
   return (
     <header className="flex border-b border-line bg-canvas px-4 py-4 lg:sticky lg:top-0 lg:h-screen lg:flex-col lg:border-b-0 lg:border-r lg:px-5 lg:py-5">
       <div className="flex w-full items-center justify-between lg:block">
-        <a href="#about" className="text-sm font-medium tracking-[-0.02em]">
+        <Link href="/" className="text-sm font-medium tracking-[-0.02em]">
           Açık Defter
-        </a>
+        </Link>
         <span className="text-[10px] uppercase tracking-[0.12em] text-muted lg:mt-1 lg:block">
           Kişisel arşiv
         </span>
