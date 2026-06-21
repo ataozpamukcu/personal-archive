@@ -1,5 +1,5 @@
 import { CommentForm } from "@/components/CommentForm";
-import type { ArchiveComment, CommentTargetType } from "@/lib/comments";
+import type { ArchiveComment } from "@/lib/comments";
 
 const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
   day: "2-digit",
@@ -9,12 +9,10 @@ const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
 
 export function CommentSection({
   comments,
-  targetType,
-  targetSlug,
+  postSlug,
 }: {
   comments: ArchiveComment[];
-  targetType: CommentTargetType;
-  targetSlug: string;
+  postSlug: string;
 }) {
   return (
     <section className="border-t border-line py-8 sm:py-10">
@@ -48,7 +46,7 @@ export function CommentSection({
         </p>
       )}
 
-      <CommentForm targetType={targetType} targetSlug={targetSlug} />
+      <CommentForm postSlug={postSlug} />
     </section>
   );
 }

@@ -89,11 +89,7 @@ export default function Home() {
           {writings.length > 0 ? (
             <div className="grid gap-3 md:grid-cols-3 lg:gap-4">
               {writings.map((writing, index) => (
-                <WritingCard
-                  key={writing.slug}
-                  writing={writing}
-                  index={index}
-                />
+                <WritingCard key={writing.id} writing={writing} index={index} />
               ))}
             </div>
           ) : (
@@ -117,7 +113,7 @@ export default function Home() {
           {blocks.length > 0 ? (
             <div className="columns-1 gap-3 sm:columns-2 lg:columns-3 lg:gap-4 xl:columns-4">
               {blocks.map((block) => (
-                <BlockCard key={block.slug} block={block} />
+                <BlockCard key={block.id} block={block} />
               ))}
             </div>
           ) : (

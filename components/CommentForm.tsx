@@ -3,15 +3,8 @@
 import { useActionState, useEffect, useRef } from "react";
 import { submitComment } from "@/app/comments/actions";
 import { initialCommentFormState } from "@/lib/comment-form";
-import type { CommentTargetType } from "@/lib/comments";
 
-export function CommentForm({
-  targetType,
-  targetSlug,
-}: {
-  targetType: CommentTargetType;
-  targetSlug: string;
-}) {
+export function CommentForm({ postSlug }: { postSlug: string }) {
   const [state, formAction, pending] = useActionState(
     submitComment,
     initialCommentFormState,
@@ -24,13 +17,12 @@ export function CommentForm({
 
   return (
     <form ref={formRef} action={formAction} className="border border-line bg-card p-4 sm:p-5">
-      <input name="targetType" type="hidden" value={targetType} />
-      <input name="targetSlug" type="hidden" value={targetSlug} />
+      <input name="postSlug" type="hidden" value={postSlug} />
 
       <div className="absolute left-[-10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-        <label htmlFor={`website-${targetType}-${targetSlug}`}>Website</label>
+        <label htmlFor={`website-${postSlug}`}>Website</label>
         <input
-          id={`website-${targetType}-${targetSlug}`}
+          id={`website-${postSlug}`}
           name="website"
           tabIndex={-1}
           type="text"

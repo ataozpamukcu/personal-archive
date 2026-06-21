@@ -1,11 +1,8 @@
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 
-export type CommentTargetType = "writing" | "block";
-
 export type ArchiveComment = {
   id: string;
-  target_type: CommentTargetType;
-  target_slug: string;
+  post_slug: string;
   author_name: string;
   body: string;
   approved: boolean;
@@ -13,17 +10,13 @@ export type ArchiveComment = {
 };
 
 const commentColumns =
-  "id, target_type, target_slug, author_name, body, approved, created_at";
+  "id, post_slug, author_name, body, approved, created_at";
 
-export async function getApprovedComments(
-  targetType: CommentTargetType,
-  targetSlug: string,
-) {
+export async function getApprovedComments(postSlug: string) {
   const { data, error } = await getSupabaseAdmin()
     .from("comments")
     .select(commentColumns)
-    .eq("target_type", targetType)
-    .eq("target_slug", targetSlug)
+    .eq("post_slug", postSlug)
     .eq("approved", true)
     .order("created_at", { ascending: true });
 
@@ -43,14 +36,12 @@ export async function getPendingComments() {
 }
 
 export async function createPendingComment(input: {
-  targetType: CommentTargetType;
-  targetSlug: string;
+  postSlug: string;
   authorName: string;
   body: string;
 }) {
   const { error } = await getSupabaseAdmin().from("comments").insert({
-    target_type: input.targetType,
-    target_slug: input.targetSlug,
+    post_slug: input.postSlug,
     author_name: input.authorName,
     body: input.body,
     approved: false,
@@ -65,14 +56,11 @@ export async function approveComment(id: string) {
     .update({ approved: true })
     .eq("id", id)
     .eq("approved", false)
-    .select("target_type, target_slug")
+    .select("post_slug")
     .single();
 
   if (error) throw new Error(`Comment could not be approved: ${error.message}`);
-  return data as {
-    target_type: CommentTargetType;
-    target_slug: string;
-  };
+  return data.post_slug as string;
 }
 
 export async function deleteComment(id: string) {
