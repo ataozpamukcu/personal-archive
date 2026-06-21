@@ -23,7 +23,11 @@ export function WritingCard({ writing, index }: WritingCardProps) {
 
       <div className="mt-5 flex items-end justify-between text-[10px] uppercase tracking-[0.12em] text-muted sm:col-span-5 sm:mt-0 sm:justify-end sm:gap-12">
         <span>{writing.kind}</span>
-        <time dateTime={writing.date}>{writing.displayDate}</time>
+        {writing.date ? (
+          <time dateTime={writing.date}>{writing.displayDate}</time>
+        ) : (
+          <span>{writing.displayDate}</span>
+        )}
       </div>
     </article>
   );

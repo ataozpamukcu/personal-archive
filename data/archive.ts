@@ -2,102 +2,96 @@ export type Writing = {
   id: string;
   title: string;
   excerpt: string;
-  kind: "Essay" | "Notebook" | "Fragment";
-  date: string;
+  kind: "Review" | "Essay" | "Fragment";
+  date?: string;
   displayDate: string;
 };
 
 export type ArchiveBlock = {
   id: string;
-  type: "Quotation" | "Note" | "Image note";
+  type: "Alıntı" | "Not" | "Bağlantı" | "Görsel notu";
   content: string;
   source: string;
   year: string;
+  href?: string;
 };
 
 export const writings: Writing[] = [
   {
-    id: "rooms-that-remember",
-    title: "Rooms That Remember Us",
+    id: "minik-serce-biz-de-yeniden-baslariz",
+    title: "Minik Serçe - Biz de Yeniden Başlarız",
     excerpt:
-      "On domestic space, inherited objects, and the strange persistence of rooms after their occupants leave.",
+      "Sezen Aksu’nun dönüşünü, geçmiş ve gelecek arasında sıkışan bir duygu haliyle okumaya çalışan bir yazı.",
+    kind: "Review",
+    date: "2026-06-21",
+    displayDate: "21 Haziran 2026",
+  },
+  {
+    id: "zamanin-kiskaci",
+    title: "Zamanın Kıskacı",
+    excerpt:
+      "Zaman, hatırlama ve gecikmiş duygular üzerine kısa bir deneme.",
     kind: "Essay",
-    date: "2026-05-18",
-    displayDate: "18 May 2026",
+    displayDate: "Taslak",
   },
   {
-    id: "margin-as-method",
-    title: "The Margin as Method",
+    id: "kenar-notlari",
+    title: "Kenar Notları",
     excerpt:
-      "Reading the pencil marks, folded corners, and small disagreements left in secondhand books.",
-    kind: "Notebook",
-    date: "2026-02-03",
-    displayDate: "03 Feb 2026",
-  },
-  {
-    id: "against-perfect-memory",
-    title: "Against Perfect Memory",
-    excerpt:
-      "A brief defense of forgetting, misquotation, and the stories that emerge in the space between them.",
-    kind: "Essay",
-    date: "2025-10-27",
-    displayDate: "27 Oct 2025",
-  },
-  {
-    id: "rain-index",
-    title: "An Index of Rain",
-    excerpt:
-      "Four observations from windows in Istanbul, London, and a train moving north.",
+      "Tam yazıya dönüşmemiş düşünceler, alıntılar ve küçük gözlemler.",
     kind: "Fragment",
-    date: "2025-04-11",
-    displayDate: "11 Apr 2025",
+    displayDate: "Taslak",
   },
 ];
 
 export const blocks: ArchiveBlock[] = [
   {
-    id: "le-guin-carrier-bag",
-    type: "Quotation",
-    content: "The natural, proper, fitting shape of the novel might be that of a sack, a bag.",
-    source: "Ursula K. Le Guin, The Carrier Bag Theory of Fiction",
-    year: "1986",
+    id: "yeniden-baslamak",
+    type: "Alıntı",
+    content: "Yeniden başlamak bazen kaldığın yere başka biri olarak dönmektir.",
+    source: "Kenar defteri, sayfa 14",
+    year: "2026",
   },
   {
-    id: "blue-hour",
-    type: "Image note",
+    id: "vapur-cami",
+    type: "Görsel notu",
     content:
-      "A nearly empty ferry crossing at blue hour. Three windows lit on the opposite shore; the water holding their reflections longer than expected.",
-    source: "Field note, Kadikoy-Besiktas ferry",
-    year: "2025",
+      "Akşam vapurundan çekilmiş bulanık bir İstanbul fotoğrafı. Camdaki yansıma, kıyıdan daha belirgin; görüntü sanki iki ayrı zamana ait.",
+    source: "Telefon arşivi / henüz taranmadı",
+    year: "2026",
   },
   {
-    id: "woolf-diary",
-    type: "Quotation",
-    content: "What sort of diary should I like mine to be? Something loose knit and yet not slovenly.",
-    source: "Virginia Woolf, A Writer's Diary",
-    year: "1919",
-  },
-  {
-    id: "found-list",
-    type: "Note",
+    id: "okuma-listesi",
+    type: "Bağlantı",
     content:
-      "Found inside a library copy: lemons, thread, batteries, return key, call mother. A whole afternoon compressed into five errands.",
-    source: "British Library reading room, scrap 04",
-    year: "2024",
+      "Dönüp yeniden bakılacak metinler, yarım kalmış okumalar ve açık sekmeler için geçici bir raf.",
+    source: "Okuma listesi / yakında",
+    year: "İndeks",
+    href: "#writings",
   },
   {
-    id: "berger-seeing",
-    type: "Quotation",
-    content: "The relation between what we see and what we know is never settled.",
-    source: "John Berger, Ways of Seeing",
-    year: "1972",
-  },
-  {
-    id: "archive-principle",
-    type: "Note",
+    id: "gecikmis-cumle",
+    type: "Not",
     content:
-      "Keep the fragment beside the finished thought. The archive should preserve uncertainty, not tidy it away.",
-    source: "Working principle no. 7",
+      "Bir cümleyi zamanında kuramayınca, yıllar sonra yazıya dönüşüyor. Belki bazı metinler yalnızca gecikmiş konuşmalardır.",
+    source: "Dağınık notlar, no. 03",
+    year: "2026",
+  },
+  {
+    id: "siir-defteri",
+    type: "Bağlantı",
+    content:
+      "Tamamlanmamış şiirler, tek dizelik başlangıçlar ve silinmeye kıyılamayan kelimeler.",
+    source: "Şiir defteri / yakında",
+    year: "Koleksiyon",
+    href: "#blocks",
+  },
+  {
+    id: "arsiv-kurali",
+    type: "Not",
+    content:
+      "Bitmiş metni sakla, ama taslağı da silme. Bazen düşüncenin asıl biçimi, tamamlanmadan hemen önceki halidir.",
+    source: "Arşiv kuralı, no. 01",
     year: "2026",
   },
 ];

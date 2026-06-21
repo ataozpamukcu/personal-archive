@@ -12,7 +12,7 @@ export function BlockCard({ block }: BlockCardProps) {
         <span>{block.year}</span>
       </div>
 
-      {block.type === "Quotation" ? (
+      {block.type === "Alıntı" ? (
         <blockquote className="my-12 font-serif text-xl leading-snug tracking-[-0.015em] sm:text-2xl">
           “{block.content}”
         </blockquote>
@@ -20,7 +20,16 @@ export function BlockCard({ block }: BlockCardProps) {
         <p className="my-12 max-w-sm text-sm leading-6">{block.content}</p>
       )}
 
-      <p className="text-[10px] leading-4 text-muted">{block.source}</p>
+      {block.href ? (
+        <a
+          href={block.href}
+          className="text-[10px] leading-4 text-muted underline underline-offset-4 transition-opacity hover:opacity-50"
+        >
+          {block.source} ↗
+        </a>
+      ) : (
+        <p className="text-[10px] leading-4 text-muted">{block.source}</p>
+      )}
     </article>
   );
 }

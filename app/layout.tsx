@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Personal Literary Archive",
-  description: "Writings, fragments, and collected references.",
+  title: "Açık Defter",
+  description: "Yazılar, şiirler, notlar ve dağınık parçalar.",
 };
 
 export default function RootLayout({
@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <body>{children}</body>
     </html>
   );
