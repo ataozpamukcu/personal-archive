@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { CommentSection } from "@/components/CommentSection";
 import { Header } from "@/components/Header";
+import { ShareButton } from "@/components/ShareButton";
 import { getArchiveTarget } from "@/lib/archive";
 import { getApprovedComments } from "@/lib/comments";
 
@@ -70,6 +71,8 @@ export default async function WritingPage({ params }: WritingPageProps) {
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
+
+          <ShareButton title={writing.title} />
         </article>
 
         <CommentSection

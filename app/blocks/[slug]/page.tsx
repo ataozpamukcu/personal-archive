@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { CommentSection } from "@/components/CommentSection";
 import { Header } from "@/components/Header";
+import { ShareButton } from "@/components/ShareButton";
 import { getArchiveTarget } from "@/lib/archive";
 import { getApprovedComments } from "@/lib/comments";
 
@@ -128,6 +129,8 @@ export default async function BlockPage({ params }: BlockPageProps) {
               )}
             </div>
           )}
+
+          <ShareButton title={block.title ?? block.type} />
         </article>
 
         <CommentSection
