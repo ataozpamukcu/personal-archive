@@ -38,9 +38,9 @@ export async function approvePendingComment(formData: FormData) {
   const id = String(formData.get("id") ?? "");
   if (!uuidPattern.test(id)) return;
 
-  const postSlug = await approveComment(id);
+  const target = await approveComment(id);
   revalidatePath("/admin/comments");
-  revalidatePath(`/writings/${postSlug}`);
+  revalidatePath(`/${target.target_type}s/${target.target_slug}`);
 }
 
 export async function deletePendingComment(formData: FormData) {

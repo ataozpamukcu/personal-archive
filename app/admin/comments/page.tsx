@@ -7,11 +7,14 @@ import {
   loginCommentsAdmin,
   logoutCommentsAdmin,
 } from "@/app/admin/comments/actions";
+import { deleteArchiveContent } from "@/app/admin/content/actions";
+import { AdminContentForm } from "@/components/AdminContentForm";
+import { getManagedArchiveItems } from "@/lib/archive";
 import { isCommentsAdmin } from "@/lib/comments-admin";
 import { getPendingComments } from "@/lib/comments";
 
 export const metadata: Metadata = {
-  title: "Yorum moderasyonu — Açık Defter",
+  title: "Admin — Açık Defter",
   robots: { index: false, follow: false },
 };
 
@@ -33,7 +36,7 @@ export default async function CommentsAdminPage({
     return (
       <main className="mx-auto min-h-screen max-w-md px-4 py-12 sm:py-20">
         <div className="archive-heading">
-          <h1>Yorum moderasyonu</h1>
+          <h1>Açık Defter Admin</h1>
           <Link href="/">Açık Defter ↗</Link>
         </div>
 
@@ -65,15 +68,16 @@ export default async function CommentsAdminPage({
   }
 
   const comments = await getPendingComments();
+  const items = await getManagedArchiveItems();
 
   return (
-    <main className="mx-auto min-h-screen max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
+    <main className="mx-auto min-h-screen max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
       <header className="flex items-start justify-between border-b border-line pb-4">
         <div>
           <p className="text-[10px] uppercase tracking-[0.1em] text-muted">
             Açık Defter / Admin
           </p>
-          <h1 className="mt-2 text-2xl tracking-[-0.03em]">Bekleyen yorumlar</h1>
+          <h1 className="mt-2 text-2xl tracking-[-0.03em]">İçerik yönetimi</h1>
         </div>
         <form action={logoutCommentsAdmin}>
           <button className="text-[10px] text-muted hover:text-ink" type="submit">
@@ -82,7 +86,60 @@ export default async function CommentsAdminPage({
         </form>
       </header>
 
-      <div className="py-8">
+      <section className="py-8">
+        <div className="archive-heading">
+          <h2>Yeni içerik</h2>
+          <span>Yazı / şiir / alıntı / video</span>
+        </div>
+        <AdminContentForm />
+      </section>
+
+      <section className="border-t border-line py-8">
+        <div className="archive-heading">
+          <h2>Yayınlananlar</h2>
+          <span>{String(items.length).padStart(2, "0")} admin kaydı</span>
+        </div>
+
+        {items.length === 0 ? (
+          <p className="border-y border-line py-6 text-center text-xs text-muted">
+            Admin panelinden eklenmiş içerik yok.
+          </p>
+        ) : (
+          <div className="border-t border-line">
+            {items.map((item) => (
+              <article
+                className="grid gap-4 border-b border-line py-4 sm:grid-cols-[1fr_auto] sm:items-center"
+                key={item.id}
+              >
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.08em] text-muted">
+                    {item.target_type === "writing" ? "yazı" : "blok"}
+                    {" / "}
+                    {item.content_type}
+                  </p>
+                  <Link
+                    className="mt-1 block text-sm underline-offset-4 hover:underline"
+                    href={`/${item.target_type}s/${item.slug}`}
+                  >
+                    {item.title}
+                  </Link>
+                </div>
+                <form action={deleteArchiveContent}>
+                  <input name="id" type="hidden" value={item.id} />
+                  <button
+                    className="border border-line px-3 py-2 text-[10px] uppercase tracking-[0.08em] text-muted hover:border-ink hover:text-ink"
+                    type="submit"
+                  >
+                    Sil
+                  </button>
+                </form>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="border-t border-line py-8">
         <div className="archive-heading">
           <h2>Moderasyon kuyruğu</h2>
           <span>{String(comments.length).padStart(2, "0")} bekleyen</span>
@@ -102,9 +159,11 @@ export default async function CommentsAdminPage({
                     {" / "}
                     <Link
                       className="underline-offset-4 hover:underline"
-                      href={`/writings/${comment.post_slug}`}
+                      href={`/${comment.target_type}s/${comment.target_slug}`}
                     >
-                      {comment.post_slug}
+                      {comment.target_type === "writing" ? "yazı" : "blok"}
+                      {" / "}
+                      {comment.target_slug}
                     </Link>
                   </p>
                   <time dateTime={comment.created_at}>
@@ -138,7 +197,7 @@ export default async function CommentsAdminPage({
             ))}
           </div>
         )}
-      </div>
+      </section>
     </main>
   );
 }

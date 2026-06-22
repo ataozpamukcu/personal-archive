@@ -1,20 +1,23 @@
 export type Writing = {
-  id: string;
+  slug: string;
   title: string;
-  excerpt: string;
-  body?: string[];
-  kind: "Review" | "Essay" | "Fragment" | "deneme";
+  type: "inceleme" | "deneme" | "parça" | "şiir";
   date?: string;
   displayDate: string;
+  excerpt?: string;
+  body: string[];
 };
 
 export type ArchiveBlock = {
-  id: string;
-  type: "Alıntı" | "Not" | "Bağlantı" | "Görsel notu" | "Müzik" | "Video";
-  content: string;
-  source: string;
-  year: string;
-  href?: string;
+  slug: string;
+  title?: string;
+  type: "alıntı" | "not" | "bağlantı" | "görsel notu" | "müzik" | "video";
+  date?: string;
+  displayDate?: string;
+  excerpt?: string;
+  body: string[];
+  source?: string;
+  sourceHref?: string;
   mediaSrc?: string;
   posterSrc?: string;
 };
@@ -41,28 +44,16 @@ export const profile = {
   ],
 };
 
-// Yeni yazılar geldikçe bu listeye Writing nesneleri eklenebilir.
-export const writings: Writing[] = [
-  {
-    id: "yorum-testi",
-    title: "Yorum Testi",
-    excerpt: "Anonim ve moderasyonlu yorum sistemini denemek için geçici yazı.",
-    body: [
-      "Bu kısa metin yalnızca yorum akışını denemek için burada. Aşağıdaki formdan isimli veya anonim bir yorum bırakabilirsin.",
-    ],
-    kind: "deneme",
-    displayDate: "taslak",
-  },
-];
+export const writings: Writing[] = [];
 
-// Yeni parçalar geldikçe bu listeye ArchiveBlock nesneleri eklenebilir.
 export const blocks: ArchiveBlock[] = [
   {
-    id: "after-a-series-of-unfortunate-events",
-    type: "Video",
-    content: "After a series of unfortunate events",
-    source: "Özgün piyano bestesi",
-    year: "09.08.2024",
+    slug: "after-a-series-of-unfortunate-events",
+    title: "After a series of unfortunate events",
+    type: "video",
+    date: "2024-08-09",
+    displayDate: "9 Ağustos 2024",
+    body: [],
     mediaSrc: "/video/after-a-series-of-unfortunate-events.m4v",
     posterSrc: "/video/after-a-series-of-unfortunate-events-poster.jpg",
   },

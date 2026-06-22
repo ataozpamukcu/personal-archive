@@ -1,14 +1,16 @@
 "use server";
 
 import { createPendingComment } from "@/lib/comments";
+import type { CommentTargetType } from "@/lib/comments";
 import type { CommentFormState } from "@/lib/comment-form";
-import { writings } from "@/data/archive";
+import { getArchiveTarget } from "@/lib/archive";
 
 export async function submitComment(
   _previousState: CommentFormState,
   formData: FormData,
 ): Promise<CommentFormState> {
-  const postSlug = String(formData.get("postSlug") ?? "").trim();
+  const targetType = String(formData.get("targetType") ?? "").trim();
+  const targetSlug = String(formData.get("targetSlug") ?? "").trim();
   const authorName = String(formData.get("authorName") ?? "").trim();
   const body = String(formData.get("body") ?? "").trim();
   const website = String(formData.get("website") ?? "").trim();
@@ -17,9 +19,15 @@ export async function submitComment(
     return { success: false, message: "Yorum gönderilemedi." };
   }
 
-  if (!writings.some((writing) => writing.id === postSlug)) {
-    return { success: false, message: "Bu yazı bulunamadı." };
+  if (targetType !== "writing" && targetType !== "block") {
+    return { success: false, message: "Yorum hedefi bulunamadı." };
   }
+
+  const target =
+    targetType === "writing"
+      ? await getArchiveTarget("writing", targetSlug)
+      : await getArchiveTarget("block", targetSlug);
+  if (!target) return { success: false, message: "Yorum hedefi bulunamadı." };
 
   if (!body) {
     return { success: false, message: "Yorum alanı boş bırakılamaz." };
@@ -35,7 +43,8 @@ export async function submitComment(
 
   try {
     await createPendingComment({
-      postSlug,
+      targetType: targetType as CommentTargetType,
+      targetSlug,
       authorName: authorName || "Anonim",
       body,
     });

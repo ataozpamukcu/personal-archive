@@ -1,13 +1,21 @@
 import Link from "next/link";
+import { getArchiveIndex } from "@/lib/archive";
 
-const navigation = [
-  { label: "Hakkında", count: "—", href: "/#about" },
-  { label: "Yazılar", count: "01", href: "/#writings" },
-  { label: "Parçalar", count: "01", href: "/#blocks" },
-  { label: "Yorum testi", count: "↗", href: "/writings/yorum-testi" },
-];
-
-export function Header() {
+export async function Header() {
+  const { writings, blocks } = await getArchiveIndex();
+  const navigation = [
+    { label: "Hakkında", count: "—", href: "/#about" },
+    {
+      label: "Yazılar",
+      count: String(writings.length).padStart(2, "0"),
+      href: "/#writings",
+    },
+    {
+      label: "Parçalar",
+      count: String(blocks.length).padStart(2, "0"),
+      href: "/#blocks",
+    },
+  ];
   return (
     <header className="flex border-b border-line bg-canvas px-4 py-4 lg:sticky lg:top-0 lg:h-screen lg:flex-col lg:border-b-0 lg:border-r lg:px-5 lg:py-5">
       <div className="flex w-full items-center justify-between lg:block">

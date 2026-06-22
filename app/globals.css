@@ -61,6 +61,53 @@ body {
   filter: grayscale(1);
 }
 
+.admin-field {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.admin-input,
+.admin-textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: 12px/1.5 Arial, Helvetica, sans-serif;
+  letter-spacing: normal;
+  text-transform: none;
+  outline: none;
+}
+
+.admin-input {
+  height: 2.5rem;
+  padding: 0 0.75rem;
+}
+
+.admin-textarea {
+  resize: vertical;
+  padding: 0.75rem;
+}
+
+.admin-input:focus,
+.admin-textarea:focus {
+  border-color: var(--ink);
+}
+
+.admin-file {
+  width: 100%;
+  border: 1px dashed var(--line);
+  padding: 0.75rem;
+  background: var(--paper);
+  color: var(--ink);
+  font: 10px Arial, Helvetica, sans-serif;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
 ::selection {
   background: var(--ink);
   color: var(--paper);

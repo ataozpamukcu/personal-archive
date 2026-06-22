@@ -45,11 +45,17 @@ export async function setCommentsAdminCookie() {
     httpOnly: true,
     sameSite: "strict",
     secure: process.env.NODE_ENV === "production",
-    path: "/admin/comments",
+    path: "/",
     maxAge: 60 * 60 * 8,
   });
 }
 
 export async function clearCommentsAdminCookie() {
-  (await cookies()).delete(adminCookieName);
+  (await cookies()).set(adminCookieName, "", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 0,
+  });
 }
