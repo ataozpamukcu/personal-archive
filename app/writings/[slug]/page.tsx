@@ -57,11 +57,11 @@ export default async function WritingPage({ params }: WritingPageProps) {
           </header>
 
           {writing.coverSrc && (
-            <div
-              aria-label={`${writing.title} kapak görseli`}
-              className="mx-auto my-8 aspect-[4/3] max-w-3xl border border-line bg-cover bg-center sm:my-10"
-              role="img"
-              style={{ backgroundImage: `url(${writing.coverSrc})` }}
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              alt={`${writing.title} kapak görseli`}
+              className="mx-auto my-8 h-auto w-full max-w-3xl border border-line sm:my-10"
+              src={writing.coverSrc}
             />
           )}
 

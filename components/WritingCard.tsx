@@ -21,11 +21,14 @@ export function WritingCard({ writing, index }: WritingCardProps) {
       </div>
 
       {writing.coverSrc && (
-        <div
-          aria-label={`${writing.title} kapak görseli`}
-          className="mt-5 aspect-[4/3] border border-line bg-cover bg-center"
-          role="img"
-          style={{ backgroundImage: `url(${writing.coverSrc})` }}
+        // Supabase images do not have dimensions in the archive record, so the
+        // native image keeps the uploaded file's real aspect ratio.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          alt={`${writing.title} kapak görseli`}
+          className="mt-5 h-auto w-full border border-line"
+          loading="lazy"
+          src={writing.coverSrc}
         />
       )}
 
