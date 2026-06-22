@@ -56,6 +56,15 @@ export default async function WritingPage({ params }: WritingPageProps) {
             </div>
           </header>
 
+          {writing.coverSrc && (
+            <div
+              aria-label={`${writing.title} kapak görseli`}
+              className="mx-auto my-8 aspect-[4/3] max-w-3xl border border-line bg-cover bg-center sm:my-10"
+              role="img"
+              style={{ backgroundImage: `url(${writing.coverSrc})` }}
+            />
+          )}
+
           <div className="mx-auto min-h-48 max-w-2xl space-y-5 py-10 text-sm leading-7 text-muted">
             {writing.body.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>

@@ -43,6 +43,10 @@ values (
     'video/quicktime',
     'video/webm',
     'video/x-m4v',
+    'audio/mpeg',
+    'audio/mp4',
+    'audio/wav',
+    'audio/ogg',
     'image/jpeg',
     'image/png',
     'image/webp'

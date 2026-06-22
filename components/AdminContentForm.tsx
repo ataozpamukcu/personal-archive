@@ -38,7 +38,7 @@ async function uploadFile(file: File) {
 
 export function AdminContentForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [itemType, setItemType] = useState("writing");
+  const [targetType, setTargetType] = useState("writing");
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -49,35 +49,31 @@ export function AdminContentForm() {
 
     try {
       const formData = new FormData(event.currentTarget);
-      const video = formData.get("videoFile");
+      const media = formData.get("mediaFile");
       const poster = formData.get("posterFile");
 
-      if (itemType === "video") {
-        if (!(video instanceof File) || video.size === 0) {
-          throw new Error("Bir video dosyası seçmelisin.");
-        }
-
-        setMessage("Video Supabase’e yükleniyor…");
-        const uploadedVideo = await uploadFile(video);
-        formData.set("mediaUrl", uploadedVideo.publicUrl);
-        formData.set("mediaPath", uploadedVideo.path);
-
-        if (poster instanceof File && poster.size > 0) {
-          setMessage("Kapak görseli yükleniyor…");
-          const uploadedPoster = await uploadFile(poster);
-          formData.set("posterUrl", uploadedPoster.publicUrl);
-          formData.set("posterPath", uploadedPoster.path);
-        }
+      if (targetType === "block" && media instanceof File && media.size > 0) {
+        setMessage("Medya Supabase’e yükleniyor…");
+        const uploadedMedia = await uploadFile(media);
+        formData.set("mediaUrl", uploadedMedia.publicUrl);
+        formData.set("mediaPath", uploadedMedia.path);
       }
 
-      formData.delete("videoFile");
+      if (poster instanceof File && poster.size > 0) {
+        setMessage("Kapak görseli yükleniyor…");
+        const uploadedPoster = await uploadFile(poster);
+        formData.set("posterUrl", uploadedPoster.publicUrl);
+        formData.set("posterPath", uploadedPoster.path);
+      }
+
+      formData.delete("mediaFile");
       formData.delete("posterFile");
       const result = await createArchiveContent(formData);
       setMessage(result.message);
 
       if (result.success) {
         formRef.current?.reset();
-        setItemType("writing");
+        setTargetType("writing");
       }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "İçerik eklenemedi.");
@@ -90,17 +86,15 @@ export function AdminContentForm() {
     <form ref={formRef} onSubmit={handleSubmit} className="border border-line bg-card p-4 sm:p-5">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="admin-field">
-          İçerik türü
+          Bölüm
           <select
             className="admin-input"
-            name="itemType"
-            value={itemType}
-            onChange={(event) => setItemType(event.target.value)}
+            name="targetType"
+            value={targetType}
+            onChange={(event) => setTargetType(event.target.value)}
           >
-            <option value="writing">Yazı</option>
-            <option value="poem">Şiir</option>
-            <option value="quote">Alıntı</option>
-            <option value="video">Video</option>
+            <option value="writing">Yazılar</option>
+            <option value="block">Dağınık parçalar</option>
           </select>
         </label>
         <label className="admin-field">
@@ -108,6 +102,16 @@ export function AdminContentForm() {
           <input className="admin-input" name="date" type="date" />
         </label>
       </div>
+
+      <label className="admin-field mt-4">
+        Tür / etiket
+        <input
+          className="admin-input"
+          name="contentType"
+          placeholder={targetType === "writing" ? "deneme, şiir, inceleme…" : "alıntı, müzik, video, not…"}
+          required
+        />
+      </label>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <label className="admin-field">
@@ -127,11 +131,14 @@ export function AdminContentForm() {
 
       <label className="admin-field mt-4">
         Tam içerik
+        {targetType === "block" && (
+          <span className="normal-case tracking-normal"> (isteğe bağlı)</span>
+        )}
         <textarea
           className="admin-textarea min-h-52"
           name="body"
           placeholder="Paragrafları boş bir satırla ayırabilirsin."
-          required
+          required={targetType === "writing"}
         />
       </label>
 
@@ -146,29 +153,28 @@ export function AdminContentForm() {
         </label>
       </div>
 
-      {itemType === "video" && (
-        <div className="mt-4 grid gap-4 border-t border-line pt-4 sm:grid-cols-2">
+      <div className="mt-4 grid gap-4 border-t border-line pt-4 sm:grid-cols-2">
+        {targetType === "block" && (
           <label className="admin-field">
-            Video dosyası <span className="normal-case tracking-normal">(maks. 100 MB)</span>
+            Medya dosyası <span className="normal-case tracking-normal">(video veya ses, isteğe bağlı)</span>
             <input
-              accept="video/mp4,video/quicktime,video/webm,video/x-m4v"
+              accept="video/mp4,video/quicktime,video/webm,video/x-m4v,audio/mpeg,audio/mp4,audio/wav,audio/ogg"
               className="admin-file"
-              name="videoFile"
-              required
+              name="mediaFile"
               type="file"
             />
           </label>
-          <label className="admin-field">
-            Kapak görseli <span className="normal-case tracking-normal">(isteğe bağlı)</span>
-            <input
-              accept="image/jpeg,image/png,image/webp"
-              className="admin-file"
-              name="posterFile"
-              type="file"
-            />
-          </label>
-        </div>
-      )}
+        )}
+        <label className="admin-field">
+          Kapak görseli <span className="normal-case tracking-normal">(yazı ve parçalar için isteğe bağlı)</span>
+          <input
+            accept="image/jpeg,image/png,image/webp"
+            className="admin-file"
+            name="posterFile"
+            type="file"
+          />
+        </label>
+      </div>
 
       <div className="mt-5 flex flex-col items-start justify-between gap-3 border-t border-line pt-4 sm:flex-row sm:items-center">
         <p className="text-[10px] leading-4 text-muted" aria-live="polite">

@@ -1,17 +1,18 @@
 export type Writing = {
   slug: string;
   title: string;
-  type: "inceleme" | "deneme" | "parça" | "şiir";
+  type: string;
   date?: string;
   displayDate: string;
   excerpt?: string;
   body: string[];
+  coverSrc?: string;
 };
 
 export type ArchiveBlock = {
   slug: string;
   title?: string;
-  type: "alıntı" | "not" | "bağlantı" | "görsel notu" | "müzik" | "video";
+  type: string;
   date?: string;
   displayDate?: string;
   excerpt?: string;

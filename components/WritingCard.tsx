@@ -20,6 +20,15 @@ export function WritingCard({ writing, index }: WritingCardProps) {
         </span>
       </div>
 
+      {writing.coverSrc && (
+        <div
+          aria-label={`${writing.title} kapak görseli`}
+          className="mt-5 aspect-[4/3] border border-line bg-cover bg-center"
+          role="img"
+          style={{ backgroundImage: `url(${writing.coverSrc})` }}
+        />
+      )}
+
       <div className="my-auto py-10">
         <h3 className="text-xl font-normal leading-[1.12] tracking-[-0.025em] transition-opacity group-hover:opacity-55">
           {writing.title}

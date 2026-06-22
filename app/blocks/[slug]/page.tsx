@@ -11,6 +11,10 @@ type BlockPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+function isAudioMedia(src: string) {
+  return /\.(mp3|m4a|wav|ogg)(?:\?|$)/i.test(src);
+}
+
 export async function generateMetadata({
   params,
 }: BlockPageProps): Promise<Metadata> {
@@ -59,7 +63,32 @@ export default async function BlockPage({ params }: BlockPageProps) {
             </div>
           </header>
 
-          {block.type === "video" && block.mediaSrc && (
+          {block.posterSrc && !block.mediaSrc && (
+            <div
+              aria-label={`${block.title ?? block.type} kapak görseli`}
+              className="mx-auto my-8 aspect-[4/3] max-w-3xl border border-line bg-cover bg-center sm:my-10"
+              role="img"
+              style={{ backgroundImage: `url(${block.posterSrc})` }}
+            />
+          )}
+
+          {block.mediaSrc && isAudioMedia(block.mediaSrc) && (
+            <div className="mx-auto max-w-2xl py-8 sm:py-10">
+              {block.posterSrc && (
+                <div
+                  aria-label={`${block.title ?? block.type} kapak görseli`}
+                  className="mx-auto mb-5 aspect-square max-w-md border border-line bg-cover bg-center"
+                  role="img"
+                  style={{ backgroundImage: `url(${block.posterSrc})` }}
+                />
+              )}
+              <audio className="w-full" controls preload="metadata" src={block.mediaSrc}>
+                Tarayıcın ses oynatıcısını desteklemiyor.
+              </audio>
+            </div>
+          )}
+
+          {block.mediaSrc && !isAudioMedia(block.mediaSrc) && (
             <div className="mx-auto max-w-md py-8 sm:py-10">
               <video
                 className="aspect-[17/30] w-full bg-black object-contain"
@@ -71,14 +100,6 @@ export default async function BlockPage({ params }: BlockPageProps) {
               >
                 Tarayıcın video oynatıcısını desteklemiyor.
               </video>
-            </div>
-          )}
-
-          {block.type === "müzik" && block.mediaSrc && (
-            <div className="mx-auto max-w-2xl py-8 sm:py-10">
-              <audio className="w-full" controls preload="metadata" src={block.mediaSrc}>
-                Tarayıcın ses oynatıcısını desteklemiyor.
-              </audio>
             </div>
           )}
 

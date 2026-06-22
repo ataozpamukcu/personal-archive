@@ -47,7 +47,10 @@ export async function createArchiveContent(
     return { success: false, message: "Admin oturumu bulunamadı." };
   }
 
-  const itemType = String(formData.get("itemType") ?? "");
+  const targetType = String(formData.get("targetType") ?? "");
+  const contentType = String(formData.get("contentType") ?? "")
+    .trim()
+    .toLocaleLowerCase("tr-TR");
   const title = String(formData.get("title") ?? "").trim();
   const requestedSlug = String(formData.get("slug") ?? "").trim();
   const date = String(formData.get("date") ?? "").trim();
@@ -60,32 +63,30 @@ export async function createArchiveContent(
   const posterUrl = String(formData.get("posterUrl") ?? "").trim();
   const posterPath = String(formData.get("posterPath") ?? "").trim();
 
-  const typeMap = {
-    writing: { targetType: "writing", contentType: "deneme" },
-    poem: { targetType: "writing", contentType: "şiir" },
-    quote: { targetType: "block", contentType: "alıntı" },
-    video: { targetType: "block", contentType: "video" },
-  } as const;
-  const mappedType = typeMap[itemType as keyof typeof typeMap];
   const slug = slugify(requestedSlug || title);
 
-  if (!mappedType || !title || !slug || !body) {
-    return { success: false, message: "Tür, başlık ve içerik zorunludur." };
-  }
-
-  if (itemType === "video" && (!mediaUrl || !mediaPath)) {
-    return { success: false, message: "Video dosyası yüklenmelidir." };
+  if (
+    (targetType !== "writing" && targetType !== "block") ||
+    !contentType ||
+    !title ||
+    !slug ||
+    (targetType === "writing" && !body)
+  ) {
+    return {
+      success: false,
+      message: "Bölüm, tür ve başlık zorunludur. Yazılarda içerik de gereklidir.",
+    };
   }
 
   try {
     await createManagedArchiveItem({
-      target_type: mappedType.targetType,
+      target_type: targetType,
       slug,
-      content_type: mappedType.contentType,
+      content_type: contentType,
       title,
       published: true,
       date: date || null,
-      display_date: formatDate(date) ?? (mappedType.targetType === "writing" ? "Taslak" : null),
+      display_date: formatDate(date) ?? (targetType === "writing" ? "Taslak" : null),
       excerpt: excerpt || null,
       body,
       source: source || null,
@@ -97,7 +98,7 @@ export async function createArchiveContent(
     });
 
     revalidatePath("/");
-    revalidatePath(`/${mappedType.targetType}s/${slug}`);
+    revalidatePath(`/${targetType}s/${slug}`);
     revalidatePath("/admin/comments");
     return { success: true, message: `“${title}” yayınlandı.` };
   } catch (error) {

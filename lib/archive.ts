@@ -70,6 +70,7 @@ function rowToWriting(row: ManagedArchiveItem): Writing {
     displayDate: row.display_date ?? "Tarihsiz",
     excerpt: row.excerpt ?? undefined,
     body: splitBody(row.body),
+    coverSrc: row.poster_url ?? undefined,
   };
 }
 

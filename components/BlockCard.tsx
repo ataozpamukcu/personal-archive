@@ -5,6 +5,10 @@ type BlockCardProps = {
   block: ArchiveBlock;
 };
 
+function isAudioMedia(src: string) {
+  return /\.(mp3|m4a|wav|ogg)(?:\?|$)/i.test(src);
+}
+
 export function BlockCard({ block }: BlockCardProps) {
   return (
     <div className="mb-3 inline-block w-full break-inside-avoid lg:mb-4">
@@ -18,20 +22,40 @@ export function BlockCard({ block }: BlockCardProps) {
           <span>{block.displayDate ?? "—"}</span>
         </div>
 
-        {block.type === "görsel notu" && (
+        {block.posterSrc && !block.mediaSrc && (
           <div
-            className="image-placeholder mt-5 aspect-[4/3] border border-line"
-            aria-label="Arşiv görseli için yer tutucu"
+            className="mt-5 aspect-[4/3] border border-line bg-cover bg-center"
+            aria-label={`${block.title ?? block.type} kapak görseli`}
             role="img"
+            style={{ backgroundImage: `url(${block.posterSrc})` }}
           />
         )}
 
-        {block.type === "video" && block.posterSrc ? (
+        {block.mediaSrc && isAudioMedia(block.mediaSrc) ? (
+          <div className="my-auto py-8">
+            {block.posterSrc && (
+              <div
+                aria-label={`${block.title ?? block.type} kapak görseli`}
+                className="mb-5 aspect-square border border-line bg-cover bg-center"
+                role="img"
+                style={{ backgroundImage: `url(${block.posterSrc})` }}
+              />
+            )}
+            {block.title && (
+              <h3 className="text-xl tracking-[-0.025em] group-hover:opacity-55">
+                {block.title}
+              </h3>
+            )}
+          </div>
+        ) : block.mediaSrc ? (
           <div className="my-5">
-            {/* A static poster keeps the homepage card fully clickable. */}
             <div
-              className="mx-auto aspect-[17/30] max-h-[70vh] w-auto max-w-full bg-black bg-cover bg-center"
-              style={{ backgroundImage: `url(${block.posterSrc})` }}
+              className="mx-auto aspect-[17/30] max-h-[70vh] w-auto max-w-full bg-black bg-contain bg-center bg-no-repeat"
+              style={
+                block.posterSrc
+                  ? { backgroundImage: `url(${block.posterSrc})` }
+                  : undefined
+              }
               role="img"
               aria-label={`${block.title ?? "Video"} önizlemesi`}
             />
@@ -39,7 +63,7 @@ export function BlockCard({ block }: BlockCardProps) {
               {block.title}
             </h3>
           </div>
-        ) : block.type === "alıntı" ? (
+        ) : block.type.toLocaleLowerCase("tr-TR") === "alıntı" ? (
           <div className="my-auto py-10">
             {block.title && (
               <h3 className="mb-5 text-xl tracking-[-0.025em] group-hover:opacity-55">
